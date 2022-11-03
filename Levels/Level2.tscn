@@ -1,4 +1,4 @@
-[gd_scene load_steps=38 format=2]
+[gd_scene load_steps=41 format=2]
 
 [ext_resource path="res://Assets/portal_start.png" type="Texture" id=1]
 [ext_resource path="res://Player/Player_Container.gd" type="Script" id=2]
@@ -7,6 +7,8 @@
 [ext_resource path="res://Levels/Camera.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Levels/Spawn.gd" type="Script" id=6]
 [ext_resource path="res://Assets/Tiles.png" type="Texture" id=7]
+[ext_resource path="res://Assets/Level 1.mp3" type="AudioStream" id=8]
+[ext_resource path="res://Enemy/Bat.tscn" type="PackedScene" id=9]
 
 [sub_resource type="TileSet" id=1]
 0/name = "Tiles.png 0"
@@ -704,6 +706,11 @@ points = PoolVector2Array( 0, 0, 64, 0, 64, 64, 0, 64 )
 } ]
 9/z_index = 0
 
+[sub_resource type="NavigationPolygon" id=33]
+vertices = PoolVector2Array( 1, 635, 386, 321, 505, 316, 650, 314, 766, 388, 3333, 312, 2303, 309, 1356, 257, 1280, 186, 2053, 445, 2110, 502, 2048, 500, 954, 188, 643, 236, 1544, 445, 1470, 381, 2096, 521, 1477, 528, 3969, -130, 3965, 637, 3333, 395, -10, -130, 386, 252, 507, 255, 968, 390, 973, 248, 2307, 521, 2310, 388, 129, 259, 126, 319, 1549, 504 )
+polygons = [ PoolIntArray( 0, 1, 2, 3, 4 ), PoolIntArray( 5, 6, 7, 8 ), PoolIntArray( 9, 6, 10, 11 ), PoolIntArray( 12, 4, 3, 13 ), PoolIntArray( 7, 6, 9, 14, 15 ), PoolIntArray( 11, 10, 16, 0, 17 ), PoolIntArray( 18, 19, 20, 5 ), PoolIntArray( 21, 18, 5, 8 ), PoolIntArray( 2, 1, 22, 23 ), PoolIntArray( 24, 25, 7, 15, 17 ), PoolIntArray( 26, 27, 20, 19 ), PoolIntArray( 21, 8, 12 ), PoolIntArray( 21, 12, 13, 23, 22 ), PoolIntArray( 21, 22, 28 ), PoolIntArray( 0, 21, 28, 29 ), PoolIntArray( 0, 29, 1 ), PoolIntArray( 26, 19, 0, 16 ), PoolIntArray( 0, 4, 24, 17 ), PoolIntArray( 11, 17, 30 ) ]
+outlines = [ PoolVector2Array( 1, 635, 3965, 637, 3969, -130, -10, -130 ), PoolVector2Array( 129, 259, 126, 319, 386, 321, 386, 252 ), PoolVector2Array( 507, 255, 505, 316, 650, 314, 643, 236 ), PoolVector2Array( 766, 388, 968, 390, 973, 248, 1356, 257, 1280, 186, 954, 188 ), PoolVector2Array( 1470, 381, 1544, 445, 2053, 445, 2048, 500, 1549, 504, 1477, 528 ), PoolVector2Array( 2110, 502, 2303, 309, 3333, 312, 3333, 395, 2310, 388, 2307, 521, 2096, 521 ) ]
+
 [node name="Game" type="Node2D"]
 
 [node name="Background" type="TileMap" parent="."]
@@ -746,6 +753,14 @@ limit_bottom = 600
 
 [node name="Enemy_Container" type="Node2D" parent="."]
 
+[node name="Bat" parent="Enemy_Container" instance=ExtResource( 9 )]
+position = Vector2( 2851, 542 )
+speed = 250
+
+[node name="Bat2" parent="Enemy_Container" instance=ExtResource( 9 )]
+position = Vector2( 1087, 880 )
+speed = 250
+
 [node name="Platform" type="TileMap" parent="."]
 tile_set = SubResource( 7 )
 collision_friction = 0.0
@@ -761,5 +776,15 @@ format = 1
 
 [node name="Camera" parent="." instance=ExtResource( 5 )]
 process_mode = 0
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 8 )
+volume_db = -20.0
+autoplay = true
+
+[node name="Navigation2D" type="Navigation2D" parent="."]
+
+[node name="NavigationPolygonInstance" type="NavigationPolygonInstance" parent="Navigation2D"]
+navpoly = SubResource( 33 )
 
 [connection signal="body_entered" from="Exit_to_3" to="Exit_to_3" method="_on_Exit_body_entered"]

@@ -6,6 +6,8 @@ onready var VP = get_viewport_rect()
 var velocity = Vector2.ZERO
 var jump_power = Vector2.ZERO
 var direction = 1
+var score = preload("res://Global.gd")
+
 
 export var gravity = Vector2(0,30)
 
